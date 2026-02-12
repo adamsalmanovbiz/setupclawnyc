@@ -3,608 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SetupClaw NYC - White-glove OpenClaw Deployment</title>
+    <title>SetupClaw NYC | White-glove OpenClaw Deployment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #050505;
-            --text-color: #ffffff;
-            --accent-color: #333;
-            --secondary-text: #a1a1aa;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .gradient-bg {
+            background: radial-gradient(circle at top right, #111 0%, #000 100%);
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 24px;
-        }
-
-        a {
-            color: #fff;
-            text-decoration: underline;
-            text-decoration-thickness: 1px;
-            text-underline-offset: 4px;
-            transition: opacity 0.2s;
-        }
-
-        a:hover {
-            opacity: 0.8;
-        }
-
-        /* Header / Nav */
-        .top-banner {
-            background: #111;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            font-size: 13px;
-            border-bottom: 1px solid #222;
-        }
-        
-        .top-banner a {
-            text-decoration: none;
-            opacity: 0.8;
-        }
-        
-        .top-banner a:hover {
-            opacity: 1;
-            text-decoration: underline;
-        }
-
-        /* Hero */
-        .hero {
-            margin-top: 40px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .brand-icon {
-            font-size: 36px;
-        }
-
-        h1 {
-            font-size: 36px;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -0.02em;
-        }
-        
-        h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-top: 60px;
-            margin-bottom: 16px;
-            letter-spacing: -0.01em;
-        }
-        
-        h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 24px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .hero-text {
-            font-size: 17px;
-            color: #e5e5e5;
-            max-width: 680px;
-            margin-bottom: 32px;
-        }
-
-        .highlight-box {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 2px 6px;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: #fff;
-        }
-
-        strong {
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* Connects To */
-        .connects-to {
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-        }
-
-        .app-icons {
-            display: flex;
-            gap: -4px; 
-        }
-        
-        .app-icon {
-            width: 22px;
-            height: 22px;
-            background: #222;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            border: 1px solid #333;
-            margin-right: 5px;
-        }
-
-        .more-badge {
-            background: #333;
-            color: #fff;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 10px;
-        }
-
-        /* Definition Section */
-        .definition {
-            margin-bottom: 40px;
-        }
-
-        .label {
-            font-size: 12px;
-            color: var(--secondary-text);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 12px;
-            display: block;
-            font-weight: 600;
-        }
-
-        .definition p {
-            font-size: 16px;
-            color: #d4d4d4;
-            margin-bottom: 20px;
-        }
-
-        /* Tweet Card */
-        .tweet-card {
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 40px;
-            background: #0a0a0a;
-            font-size: 15px;
-            color: #d4d4d4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            display: grid;
-            gap: 20px;
-        }
-
-        .testimonial-item {
-            border-left: 2px solid #333;
-            padding-left: 16px;
-        }
-
-        .quote {
-            font-size: 16px;
-            color: #d4d4d4;
-            font-style: italic;
-            margin-bottom: 8px;
-        }
-        
-        .quote-author {
-            color: #666; 
-            font-size: 13px;
-        }
-
-        /* Why not DIY */
-        .why-not-diy p {
-            font-size: 16px;
-            color: #d4d4d4;
-            margin-bottom: 20px;
-        }
-
-        /* Pricing Cards */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        @media (min-width: 600px) {
-            .pricing-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .pricing-card {
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            background: #0a0a0a;
-            transition: border-color 0.2s;
-            text-decoration: none;
-            display: block;
-            color: inherit;
-        }
-
-        .pricing-card:hover {
-            border-color: #666;
-            opacity: 1;
-        }
-
-        .pricing-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            display: block;
-        }
-
-        .pricing-desc {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 12px;
-            display: block;
-            min-height: 36px;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            display: block;
-        }
-
-        .price-sub {
-            font-size: 13px;
-            color: #666;
-            font-weight: 400;
-        }
-
-        /* Steps */
-        .steps {
-            margin-top: 32px;
-        }
-
-        .step-item {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .step-num {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            min-width: 24px;
-        }
-
-        .step-content h3 {
-            margin-top: 0;
-            margin-bottom: 4px;
-        }
-
-        .step-content p {
-            margin: 0;
-            color: #a1a1aa;
-            font-size: 15px;
-        }
-
-        /* FAQ */
-        .faq-item {
-            margin-bottom: 24px;
-        }
-
-        .faq-item h3 {
-             font-size: 15px;
-        }
-
-        .faq-item p {
-            color: #a1a1aa;
-            font-size: 15px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: #fff;
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            margin-top: 16px;
-            transition: opacity 0.2s;
-        }
-        
-        .cta-button:hover {
-            opacity: 0.9;
-        }
-        
-        /* Security List */
-        .security-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-        
-        .security-list li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-            color: #a1a1aa;
-            font-size: 15px;
-        }
-        
-        .security-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #666;
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 80px;
-            padding-top: 32px;
-            border-top: 1px solid #222;
-            color: #666;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body>
+<body class="bg-[#050505] text-zinc-300 selection:bg-zinc-800 selection:text-white">
 
-    <div class="top-banner">
-        NYC in-person + remote worldwide. <a href="https://x.com/adamsalmanovbiz">DM @adamsalmanovbiz on X or Instagram &rarr;</a>
+    <!-- Top Banner -->
+    <div class="w-full bg-zinc-900/50 border-b border-zinc-800 text-center py-2.5 text-xs font-medium tracking-wide text-zinc-400">
+        NYC IN-PERSON + REMOTE WORLDWIDE. 
+        <a href="https://x.com/adamsalmanovbiz" class="text-white hover:underline ml-1">DM @ADAMSALMANOVBIZ ON X OR INSTAGRAM →</a>
     </div>
 
-    <div class="container">
-        <div class="hero">
-            <div class="brand">
-                <span class="brand-icon">🦞</span>
-                <h1>SetupClaw NYC</h1>
-            </div>
-            
-            <div class="hero-text">
-                White-glove <span class="highlight-box">OpenClaw</span> deployment for high-leverage founders and entrepreneurs. We professionally deploy and maintain the AI assistant that clears your inbox, manages your calendar, and handles the operational friction of your life — on your hardware, under your control.
-                <br><br>
-                Built for <strong>non-technical founders, operators, and high-net-worth individuals</strong> who need an elite digital Chief of Staff without the security risks of the cloud.
-            </div>
-
-            <div class="connects-to">
-                <span>CONNECTS TO</span>
-                <div class="app-icons">
-                    <div class="app-icon">M</div>
-                    <div class="app-icon">G</div>
-                    <div class="app-icon">S</div>
-                    <div class="app-icon">W</div>
-                    <div class="app-icon">N</div>
-                    <span class="more-badge">+20</span>
-                </div>
-            </div>
-
-            <a href="mailto:adam@salmanovmedia.com" class="cta-button">Get Deployed in NYC</a>
-        </div>
-
-        <div class="definition">
-            <span class="label">WHAT'S AN "EXECUTIVE AGENT"?</span>
-            <p>
-                <strong>1 Executive Agent = 1 OpenClaw instance</strong> configured for your primary identity (Inbox, Calendar, iMessage, and File system). This keeps your data isolated and secure. We specialize in deploying agents for <strong>solo founders and high-performance teams</strong> who can't afford to be bogged down by admin.
-            </p>
-        </div>
-
-        <div class="tweet-card">
-            <div>
-                See the work in action on <a href="https://x.com/adamsalmanovbiz">X / Twitter</a>.
-            </div>
-        </div>
-
-        <div class="definition">
-            <span class="label">WHAT PEOPLE ARE SAYING ABOUT OPENCLAW</span>
-            <div class="testimonials">
-                <div class="testimonial-item">
-                    <div class="quote">“Genuinely the most incredible sci-fi takeoff-adjacent thing I have seen recently.”</div>
-                    <div class="quote-author">— <a href="https://x.com/karpathy">Andrej Karpathy</a>, former Director of AI at Tesla</div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="quote">“It feels like hiring an employee rather than opening another chat window.”</div>
-                    <div class="quote-author">— <a href="https://www.macstories.net">MacStories</a></div>
-                </div>
-                <div class="testimonial-item">
-                    <div class="quote">“One user cleared nearly 6,000 emails from their inbox on the first day.”</div>
-                    <div class="quote-author">— Turing College</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="definition why-not-diy">
-            <h2>Why not just set it up yourself?</h2>
-            <p>
-                You can — OpenClaw is open-source. But most teams need custom integrations beyond the defaults, and even experienced engineers spend several hours getting everything wired up. Then there's the ongoing maintenance: updates, drift, broken workflows, security patches.
-            </p>
-            <p>
-                We handle all of it — deployed securely from day one, following the <a href="#">official hardening guide</a>, so your team gets leverage instead of another project to maintain. We show up and do it for you.
-            </p>
-        </div>
-
-        <div class="definition">
-            <h2>Implementation</h2>
-            <div class="pricing-grid">
-                <a href="mailto:adam@salmanovmedia.com?subject=NYC In-Person Setup" class="pricing-card">
-                    <span class="pricing-title">In-Person (NYC)</span>
-                    <span class="pricing-desc">Manhattan/Brooklyn — first agent + hardening + 14-day hypercare</span>
-                    <span class="price">$2,400</span>
-                </a>
-                <a href="mailto:adam@salmanovmedia.com?subject=Remote Setup" class="pricing-card">
-                    <span class="pricing-title">Remote</span>
-                    <span class="pricing-desc">Anywhere — first agent + hardening + 14-day hypercare</span>
-                    <span class="price">$1,200</span>
-                </a>
-                <a href="mailto:adam@salmanovmedia.com?subject=Additional Agent" class="pricing-card">
-                    <span class="pricing-title">Additional Executive Agent</span>
-                    <span class=\"pricing-desc\">CEO, EA, Sales, Finance — deploy your exec team</span>
-                    <span class=\"price\">+$1,200 <span class=\"price-sub\">each</span></span>
-                </a>
-            </div>
-            
-            <h3 style="margin-top: 40px; margin-bottom: 20px;">Managed Care</h3>
-            <div class="pricing-grid">
-                <a href="mailto:adam@salmanovmedia.com?subject=Care Standard" class="pricing-card">
-                    <span class="pricing-title">Care Standard</span>
-                    <span class="pricing-desc">Up to 2 agents, monitoring, support, 2 hrs/mo included</span>
-                    <span class="price">$1,875 <span class="price-sub">/mo</span></span>
-                </a>
-                <a href="mailto:adam@salmanovmedia.com?subject=Care Plus" class="pricing-card">
-                    <span class="pricing-title">Care Plus</span>
-                    <span class="pricing-desc">Up to 5 agents, priority support, monthly review, 6 hrs/mo</span>
-                    <span class="price">$3,750 <span class="price-sub">/mo</span></span>
-                </a>
-            </div>
-
-            <p style="margin-top: 32px; color: #666; font-size: 14px;">
-                Hardware at cost or bring your own. Mac mini required for iMessage.<br>
-                Implementation includes 14-day hypercare. Ongoing support requires Managed Care.
-            </p>
-        </div>
-
-        <div class="definition">
-            <h2>Where we operate</h2>
-            <div class="pricing-grid">
-                <div class="pricing-card" style="cursor: default; border-color: #333;">
-                    <span class="pricing-title">In-Person</span>
-                    <span class="pricing-desc">New York City (Manhattan & Brooklyn). We come to your office or home.</span>
-                </div>
-                <div class="pricing-card" style="cursor: default; border-color: #333;">
-                    <span class="pricing-title">Remote</span>
-                    <span class="pricing-desc">Available worldwide — we deploy on your hardware or VPS over a call.</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="definition">
-            <h2>How it works</h2>
-            <div class="steps">
-                <div class="step-item">
-                    <div class="step-num">1</div>
-                    <div class="step-content">
-                        <h3>Kickoff</h3>
-                        <p>Goals, systems (Google/Microsoft), security posture.</p>
-                    </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">2</div>
-                    <div class="step-content">
-                        <h3>Implementation</h3>
-                        <p>Install + hardening + connect integrations + build workflows.</p>
-                    </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">3</div>
-                    <div class="step-content">
-                        <h3>Go-live</h3>
-                        <p>You start using it the same day.</p>
-                    </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">4</div>
-                    <div class="step-content">
-                        <h3>Hypercare</h3>
-                        <p>14 days of fast fixes and tuning via your dedicated support channel.</p>
-                    </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">5</div>
-                    <div class="step-content">
-                        <h3>Managed Care</h3>
-                        <p>Monitoring, updates, drift checks, and ongoing improvements.</p>
-                    </div>
-                </div>
-            </div>
-            <p style="color: #666;">Most companies are 5–8 hours all-in, especially with multiple agents.</p>
-        </div>
-
-        <div class="definition">
-            <h2>FAQ</h2>
-            <div class="faq-item">
-                <h3>What is OpenClaw?</h3>
-                <p>An open-source AI assistant that can triage email, schedule meetings, draft replies, and automate workflows across your tools — running on your own hardware.</p>
-            </div>
-            <div class="faq-item">
-                <h3>What's included in implementation?</h3>
-                <p>Install + hardening, email + calendar integration, up to 3 mission-critical workflows, documentation, and 14-day hypercare. For in-person (NYC), we come to your location.</p>
-            </div>
-            <div class="faq-item">
-                <h3>How long does setup take?</h3>
-                <p>Expect 5–8 hours all-in for most teams (more with multi-agent rollouts). You go live the same day, typically across one or two sessions.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Is OpenClaw safe to run?</h3>
-                <p>It's never 100% safe — it's an AI with access to your email and calendar. We configure it to pass security review: audit trails, access controls, hardening. We help you make the decisions necessary to get it to production instead of stuck in compliance limbo.</p>
-            </div>
-            <div class="faq-item">
-                <h3>Do you do multi-agent deployments?</h3>
-                <p>Yes — this is the common case for 4–50 employee teams. We'll help decide which roles need their own agent vs shared workflows.</p>
-            </div>
-        </div>
-
-        <div class="definition">
-            <h2>Security & your data</h2>
-            <p>OpenClaw runs locally — your data stays on your hardware. We follow the official hardening guide:</p>
-            <ul class="security-list">
-                <li>Inbound access locked — DM pairing, mention-gating in groups, explicit allowlists</li>
-                <li>Network exposure minimized — loopback-only binding, no public endpoints</li>
-                <li>Tool blast radius limited — elevated tools restricted, sandboxing enabled</li>
-                <li>File permissions set — credentials and config locked to your user</li>
-                <li>Credentials in env vars — not in prompts, redacted from logs</li>
-                <li>Plugins explicitly allowed — no third-party or unaudited code</li>
-                <li>Security audit before handoff — you can re-run it anytime</li>
-            </ul>
-        </div>
-
-        <div class="definition">
-            <h2>Contact</h2>
-            <p>Questions? <a href="mailto:adam@salmanovmedia.com">Email Adam</a> or DM <a href="https://x.com/adamsalmanovbiz">@adamsalmanovbiz</a> on X or <a href="https://instagram.com/adamsalmanovbiz">Instagram</a>.</p>
-            <a href="mailto:adam@salmanovmedia.com" class="cta-button">Book a Call</a>
-        </div>
+    <div class="max-w-4xl mx-auto px-6 py-12 md:py-24">
         
-        <footer>
-            <div>
-                <span class="salmanov-brand">&lt;SALMANOV /&gt;</span>
+        <!-- Header -->
+        <header class="flex items-center gap-4 mb-12">
+            <span class="text-4xl">🦞</span>
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-white uppercase italic">SetupClaw NYC</h1>
+        </header>
+
+        <!-- Hero -->
+        <section class="mb-20">
+            <p class="text-xl md:text-2xl text-zinc-100 leading-relaxed mb-8 max-w-2xl">
+                White-glove deployment for high-leverage founders. We deploy an <span class="mono text-sm bg-zinc-800 px-1.5 py-0.5 rounded border border-zinc-700">OpenClaw</span> instance that actually does the work — on your hardware, under your control.
+            </p>
+            <p class="text-lg text-zinc-400 mb-10 max-w-2xl">
+                Built for non-technical entrepreneurs who need an elite digital Chief of Staff without the security risks of the cloud.
+            </p>
+            <div class="flex flex-wrap gap-4">
+                <a href="mailto:adam@salmanovmedia.com" class="bg-white text-black px-6 py-3 rounded-md font-bold text-sm hover:opacity-90 transition-all uppercase tracking-tight">Get Deployed in NYC</a>
+                <a href="#intelligence" class="border border-zinc-700 text-zinc-300 px-6 py-3 rounded-md font-bold text-sm hover:bg-zinc-900 transition-all uppercase tracking-tight">The Intelligence Layer</a>
             </div>
-            <div>
+        </section>
+
+        <!-- The Intelligence Layer (New Section) -->
+        <section id="intelligence" class="mb-24 py-12 border-t border-zinc-900">
+            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase mb-4 block">THE EDGE</span>
+            <h2 class="text-2xl font-bold text-white mb-6">Autonomous Intelligence Layer</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass p-8 rounded-xl">
+                    <div class="text-white font-bold mb-2 flex items-center gap-2">
+                        <span class="text-zinc-500">🧠</span> Adaptive Memory
+                    </div>
+                    <p class="text-sm text-zinc-400 leading-relaxed italic">
+                        "It doesn't just follow instructions; it learns your taste."
+                    </p>
+                    <p class="mt-4 text-sm text-zinc-400">
+                        Most AIs start fresh every time you talk. We deploy a custom **Decisioning Layer** and **Permanent Memory** system. It learns your preferences, your tone, and how you make decisions. The more you use it, the more it thinks like you.
+                    </p>
+                </div>
+                <div class="glass p-8 rounded-xl">
+                    <div class="text-white font-bold mb-2 flex items-center gap-2">
+                        <span class="text-zinc-500">📂</span> Custom Skillsets
+                    </div>
+                    <p class="text-sm text-zinc-400 leading-relaxed italic">
+                        "Your proprietary business logic, automated."
+                    </p>
+                    <p class="mt-4 text-sm text-zinc-400">
+                        We don't just 'install' AI. We bake in custom skills — from automated video repurposing to complex client reporting. Your agent isn't a generalist; it's a specialist built for your specific gameplan.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Definition Section -->
+        <section class="mb-20">
+            <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase mb-4 block italic">Definitions</span>
+            <div class="glass p-8 rounded-xl border-l-4 border-l-white">
+                <h3 class="text-lg font-bold text-white mb-2">What's an Executive Agent?</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                    <strong>1 Executive Agent = 1 Private Instance</strong> configured for your primary identity (Inbox, Calendar, iMessage, and File system). This keeps your data isolated and secure. We specialize in solo founders and high-performance teams who can't afford to be bogged down by admin.
+                </p>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="mb-24">
+            <h2 class="text-2xl font-bold text-white mb-8">Implementation</h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div class="border border-zinc-800 p-8 rounded-xl hover:border-zinc-600 transition-colors">
+                    <h4 class="text-sm font-bold text-white uppercase mb-2 italic">In-Person (NYC)</h4>
+                    <p class="text-zinc-500 text-sm mb-6">Manhattan/Brooklyn. Hardening + custom skill mapping + 14-day hypercare.</p>
+                    <span class="text-3xl font-bold text-white">$2,400</span>
+                </div>
+                <div class="border border-zinc-800 p-8 rounded-xl hover:border-zinc-600 transition-colors">
+                    <h4 class="text-sm font-bold text-white uppercase mb-2 italic">Remote</h4>
+                    <p class="text-zinc-500 text-sm mb-6">Worldwide via encrypted call. Hardening + custom skill mapping + 14-day hypercare.</p>
+                    <span class="text-3xl font-bold text-white">$1,200</span>
+                </div>
+            </div>
+            <p class="text-xs text-zinc-500 max-w-lg">
+                Implementation includes your custom Intelligence Layer. Ongoing maintenance and skill updates require Managed Care.
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-12 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+            <div class="mono text-xs text-zinc-500 tracking-tighter">
+                &lt;SALMANOV /&gt;
+            </div>
+            <div class="flex gap-6 text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                <a href="mailto:adam@salmanovmedia.com" class="hover:text-white transition-colors">Email</a>
+                <a href="https://x.com/adamsalmanovbiz" class="hover:text-white transition-colors">X</a>
+                <a href="https://instagram.com/adamsalmanovbiz" class="hover:text-white transition-colors">Instagram</a>
+            </div>
+            <div class="text-[10px] text-zinc-600 uppercase">
                 © 2026 Adam Salmanov
-            </div>
-            <div>
-                <a href="https://salmanovmedia.com" style="color: #666; text-decoration: none;">Salmanov Media</a>
             </div>
         </footer>
 
