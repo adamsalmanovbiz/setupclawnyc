@@ -3,611 +3,903 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SetupClaw NYC - White-glove OpenClaw Deployment</title>
+    <title>SetupClaw NYC — Your Chief of Staff, Running Locally</title>
+    <meta name="description" content="We deploy OpenClaw for NYC founders. Show up Monday morning, walk out with an AI assistant handling your email, calendar, and busywork. $2,400 one-time, done right.">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050505;
-            --text-color: #ffffff;
-            --accent-color: #333;
-            --secondary-text: #a1a1aa;
-            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* Colors */
+            --accent: #D42B2B;
+            --accent-dim: rgba(212, 43, 43, 0.12);
+            --bg: #080808;
+            --surface: #111111;
+            --card: #161616;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-strong: rgba(255, 255, 255, 0.1);
+            --text-primary: #F5F5F4;
+            --text-secondary: #A8A8A8;
+            --text-muted: #555555;
+            --cream: #F5F0EB;
+            --success: #22C55E;
+
+            /* Border Radius */
+            --r-sm: 6px;
+            --r-md: 12px;
+            --r-lg: 20px;
+
+            /* Spacing */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            --space-6: 48px;
+            --space-8: 64px;
+            --space-10: 80px;
+            --space-12: 96px;
+            --space-15: 120px;
+
+            /* Typography */
+            --font-display: 'Instrument Serif', serif;
+            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: var(--font-body);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><filter id="noise"><feTurbulence baseFrequency="0.9" /></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.03" /></svg>');
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.5;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 60px 24px;
+            padding: 0 var(--space-3);
         }
 
-        a {
-            color: #fff;
-            text-decoration: underline;
-            text-decoration-thickness: 1px;
-            text-underline-offset: 4px;
-            transition: opacity 0.2s;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(8, 8, 8, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
         }
 
-        a:hover {
-            opacity: 0.8;
-        }
-
-        /* Header / Nav */
-        .top-banner {
-            background: #111;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            font-size: 13px;
-            border-bottom: 1px solid #222;
-        }
-        
-        .top-banner a {
-            text-decoration: none;
-            opacity: 0.8;
-        }
-        
-        .top-banner a:hover {
-            opacity: 1;
-            text-decoration: underline;
-        }
-
-        /* Hero */
-        .hero {
-            margin-top: 40px;
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
         }
 
         .brand {
             display: flex;
-            align-items: center; gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .brand-icon {
-            font-size: 36px;
-        }
-
-        h1 {
-            font-size: 36px;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: -0.02em;
-        }
-        
-        h2 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-top: 60px;
-            margin-bottom: 16px;
-            letter-spacing: -0.01em;
-        }
-        
-        h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 24px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .hero-text {
-            font-size: 17px;
-            color: #e5e5e5;
-            max-width: 680px;
-            margin-bottom: 32px;
-        }
-
-        .highlight-box {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 2px 6px;
-            font-family: monospace;
-            font-size: 0.9em;
-            color: #fff;
-        }
-
-        strong {
-            color: #fff;
-            font-weight: 600;
-        }
-
-        /* Connects To */
-        .connects-to {
-            margin-bottom: 40px;
-            display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
+            gap: var(--space-2);
         }
 
-        .app-icons {
-            display: flex;
-            gap: -4px; 
-        }
-        
-        .app-icon {
-            width: 22px;
-            height: 22px;
-            background: #222;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .brand-text {
+            font-family: var(--font-mono);
             font-size: 11px;
-            border: 1px solid #333;
-            margin-right: 5px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-primary);
         }
 
-        .more-badge {
-            background: #333;
-            color: #fff;
-            padding: 2px 5px;
-            border-radius: 4px;
-            font-size: 10px;
+        .badge {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: var(--r-sm);
         }
 
-        /* Definition Section */
-        .definition {
-            margin-bottom: 40px;
+        .nav-links {
+            display: none;
+            gap: var(--space-4);
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 200ms ease-out;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-block;
+            background: var(--accent);
+            color: #FFFFFF;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: var(--r-sm);
+            border: none;
+            cursor: pointer;
+            transition: background 300ms ease-out;
+        }
+
+        .btn-primary:hover {
+            background: #C02525;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--border-strong);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: var(--r-sm);
+            transition: all 300ms ease-out;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-strong);
+        }
+
+        /* Typography */
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 400;
+            letter-spacing: -1px;
+            line-height: 1.05;
+            color: var(--text-primary);
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-family: var(--font-body);
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .label {
-            font-size: 12px;
-            color: var(--secondary-text);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 12px;
-            display: block;
+            font-family: var(--font-mono);
+            font-size: 11px;
             font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: var(--space-2);
         }
 
-        .definition p {
-            font-size: 16px;
-            color: #d4d4d4;
-            margin-bottom: 20px;
+        .accent-text {
+            color: var(--accent);
         }
 
-        /* Intelligence Grid */
-        .intel-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-top: 24px;
-            margin-bottom: 60px;
+        /* Hero Section */
+        .hero {
+            padding-top: calc(64px + var(--space-15));
+            padding-bottom: var(--space-15);
+            position: relative;
         }
 
-        @media (min-width: 600px) {
-            .intel-grid {
-                grid-template-columns: 1fr 1fr;
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 60% 50% at 70% 30%, rgba(212, 43, 43, 0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 20% 80%, rgba(212, 43, 43, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero .container {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: var(--space-4) auto;
+            max-width: 700px;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            margin-top: var(--space-6);
+            align-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .hero-cta {
+                flex-direction: row;
+                justify-content: center;
             }
         }
 
-        .intel-card {
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            background: #0a0a0a;
+        .hero-meta {
+            margin-top: var(--space-4);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
         }
 
-        .intel-title {
+        /* Social Proof */
+        .social-proof {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: var(--space-8) 0;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-3);
+        }
+
+        @media (min-width: 768px) {
+            .testimonials {
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--space-4);
+            }
+        }
+
+        .testimonial-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: var(--space-4);
+        }
+
+        .testimonial-quote {
             font-size: 15px;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2);
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        /* Section */
+        section {
+            padding: var(--space-15) 0;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: var(--space-6);
+            transition: background 400ms ease-out;
+        }
+
+        .card:hover {
+            background: var(--card);
+        }
+
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: var(--space-3);
+        }
+
+        .card-title {
+            font-family: var(--font-body);
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 8px;
-            display: block;
-            color: #fff;
+            margin-bottom: var(--space-2);
         }
 
-        .intel-desc {
-            font-size: 13px;
-            color: #a1a1aa;
-            line-height: 1.5;
-        }
-
-        /* Tweet Card */
-        .tweet-card {
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 40px;
-            background: #0a0a0a;
+        .card-desc {
             font-size: 15px;
-            color: #d4d4d4;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-6);
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Process Steps */
+        .process-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: var(--space-6);
+        }
+
+        .step {
+            display: flex;
+            gap: var(--space-3);
+            margin-bottom: var(--space-4);
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            display: grid;
-            gap: 20px;
-        }
-
-        .testimonial-item {
-            border-left: 2px solid #333;
-            padding-left: 16px;
-        }
-
-        .quote {
-            font-size: 16px;
-            color: #d4d4d4;
-            font-style: italic;
-            margin-bottom: 8px;
-        }
-        
-        .quote-author {
-            color: #666; 
+            font-family: var(--font-mono);
             font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .step-content h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: var(--space-1);
+        }
+
+        .step-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Security List */
+        .security-list {
+            list-style: none;
+        }
+
+        .security-list li {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-3);
+            padding-left: 0;
+        }
+
+        .check-icon {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            color: var(--success);
         }
 
         /* Pricing Cards */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 24px;
-        }
-
-        @media (min-width: 600px) {
-            .pricing-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         .pricing-card {
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 20px;
-            background: #0a0a0a;
-            transition: border-color 0.2s;
-            text-decoration: none;
-            display: block;
-            color: inherit;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: var(--space-6);
+            transition: all 300ms ease-out;
+            position: relative;
         }
 
         .pricing-card:hover {
-            border-color: #666;
-            opacity: 1;
+            background: var(--card);
+            border-color: var(--border-strong);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--accent);
+            border-width: 2px;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--accent);
+            color: #FFFFFF;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 0 var(--r-lg) 0 var(--r-sm);
         }
 
         .pricing-title {
-            font-size: 15px;
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 6px;
-            display: block;
+            margin-bottom: var(--space-1);
         }
 
         .pricing-desc {
             font-size: 13px;
-            color: #888;
-            margin-bottom: 12px;
-            display: block;
-            min-height: 36px;
+            color: var(--text-muted);
+            margin-bottom: var(--space-4);
+            min-height: 40px;
         }
 
         .price {
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            display: block;
+            font-family: var(--font-display);
+            font-size: 40px;
+            font-weight: 400;
+            letter-spacing: -1px;
+            margin-bottom: var(--space-4);
         }
 
         .price-sub {
+            font-family: var(--font-mono);
             font-size: 13px;
-            color: #666;
+            color: var(--text-muted);
             font-weight: 400;
         }
 
-        /* Steps */
-        .steps {
-            margin-top: 32px;
-        }
-
-        .step-item {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .step-num {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            min-width: 24px;
-        }
-
-        .step-content h3 {
-            margin-top: 0;
-            margin-bottom: 4px;
-        }
-
-        .step-content p {
-            margin: 0;
-            color: #a1a1aa;
-            font-size: 15px;
-        }
-
-        /* FAQ */
-        .faq-item {
-            margin-bottom: 24px;
-        }
-
-        .faq-item h3 {
-             font-size: 15px;
-        }
-
-        .faq-item p {
-            color: #a1a1aa;
-            font-size: 15px;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: #fff;
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            margin-top: 16px;
-            transition: opacity 0.2s;
-        }
-        
-        .cta-button:hover {
-            opacity: 0.9;
-        }
-        
-        /* Security List */
-        .security-list {
+        .pricing-features {
             list-style: none;
-            padding: 0;
-            margin-top: 20px;
+            margin-bottom: var(--space-6);
         }
-        
-        .security-list li {
-            margin-bottom: 8px;
-            padding-left: 20px;
-            position: relative;
-            color: #a1a1aa;
-            font-size: 15px;
-        }
-        
-        .security-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #666;
+
+        .pricing-features li {
+            display: flex;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+            font-size: 13px;
+            color: var(--text-secondary);
         }
 
         /* Footer */
         footer {
-            margin-top: 80px;
-            padding-top: 32px;
-            border-top: 1px solid #222;
-            color: #666;
-            font-size: 13px;
+            border-top: 1px solid var(--border);
+            padding: var(--space-6) 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: var(--space-3);
+        }
+
+        .footer-links {
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
+            justify-content: center;
+            gap: var(--space-4);
+        }
+
+        .footer-links a {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 200ms ease-out;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
         }
     </style>
 </head>
 <body>
 
-    <div class="top-banner">
-        NYC in-person + remote worldwide. <a href="https://x.com/adamsalmanovbiz">DM @adamsalmanovbiz on X or Instagram &rarr;</a>
-    </div>
-
-    <div class="container">
-        <div class="hero">
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
             <div class="brand">
-                <span class="brand-icon">🦞</span>
-                <h1>SetupClaw NYC</h1>
+                <span class="brand-text">SETUPCLAW NYC</span>
+                <span class="badge">NYC + REMOTE</span>
             </div>
-            
-            <div class="hero-text">
-                White-glove <span class="highlight-box">OpenClaw</span> deployment for high-leverage founders and entrepreneurs. We professionally deploy and maintain the AI assistant that clears your inbox, manages your calendar, and handles the operational friction of your life — on your hardware, under your control.
-                <br><br>
-                Built for <strong>non-technical founders, operators, and high-net-worth individuals</strong> who need an elite digital Chief of Staff without the security risks of the cloud.
+            <div class="nav-links">
+                <a href="#how-it-works">HOW IT WORKS</a>
+                <a href="#pricing">PRICING</a>
+                <a href="#security">SECURITY</a>
             </div>
-
-            <div class="connects-to">
-                <span>CONNECTS TO</span>
-                <div class="app-icons">
-                    <div class="app-icon">M</div>
-                    <div class="app-icon">G</div>
-                    <div class="app-icon">S</div>
-                    <div class="app-icon">W</div>
-                    <div class="app-icon">N</div>
-                    <span class="more-badge">+20</span>
-                </div>
-            </div>
-
-            <a href="mailto:adam@salmanovmedia.com" class="cta-button">Get Deployed in NYC</a>
+            <a href="mailto:adam@salmanovmedia.com" class="btn-primary">SCHEDULE SETUP</a>
         </div>
+    </nav>
 
-        <div class="definition" style="margin-top: 60px;">
-            <span class="label">THE INTELLIGENCE LAYER</span>
-            <h2>Adaptive Memory & Decisioning</h2>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>
+                Your Chief of Staff,<br>
+                <span class="accent-text">Running Locally.</span>
+            </h1>
             <p>
-                Unlike standard chat bots, we deploy a persistent <strong>Intelligence Layer</strong> that matures with your business.
+                OpenClaw is the open-source AI assistant that runs on <em>your</em> Mac, not someone else's cloud.
+                We deploy it for NYC founders who'd rather spend a Monday afternoon than a whole weekend debugging.
             </p>
-            <div class="intel-grid">
-                <div class="intel-card">
-                    <span class="intel-title">🧠 Personalized Decisioning</span>
-                    <p class="intel-desc">Your agent doesn't just follow instructions; it learns your taste, your tone, and how you prioritize. The more you use it, the more it thinks like you.</p>
-                </div>
-                <div class="intel-card">
-                    <span class="intel-title">📂 Custom Skillsets</span>
-                    <p class="intel-desc">We bake in proprietary logic—from automated video repurposing to complex reporting—tailored specifically to your gameplan.</p>
-                </div>
+            <div class="hero-cta">
+                <a href="#pricing" class="btn-primary">SEE PRICING</a>
+                <a href="mailto:adam@salmanovmedia.com" class="btn-secondary">SCHEDULE A SETUP CALL</a>
             </div>
+            <p class="hero-meta">📍 IN-PERSON IN MANHATTAN & BROOKLYN | REMOTE WORLDWIDE | 🔒 YOUR DATA NEVER LEAVES YOUR DESK</p>
         </div>
+    </section>
 
-        <div class="definition">
-            <span class="label">WHAT'S AN "EXECUTIVE AGENT"?</span>
-            <p>
-                <strong>1 Executive Agent = 1 OpenClaw instance</strong> configured for your primary identity (Inbox, Calendar, iMessage, and File system). This keeps your data isolated and secure. We specialize in solo founders and high-performance teams who can't afford to be bogged down by admin.
-            </p>
-        </div>
-
-        <div class="tweet-card">
-            <div>
-                See the work in action on <a href="https://x.com/adamsalmanovbiz">X / Twitter</a>.
-            </div>
-        </div>
-
-        <div class="definition">
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
             <span class="label">WHAT PEOPLE ARE SAYING ABOUT OPENCLAW</span>
             <div class="testimonials">
-                <div class="testimonial-item">
-                    <div class="quote">“Genuinely the most incredible sci-fi takeoff-adjacent thing I have seen recently.”</div>
-                    <div class="quote-author">— <a href="https://x.com/karpathy">Andrej Karpathy</a>, former Director of AI at Tesla</div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"Genuinely the most incredible sci-fi takeoff-adjacent thing I have seen recently."</p>
+                    <div class="testimonial-author">— ANDREJ KARPATHY, FORMER DIRECTOR OF AI AT TESLA</div>
                 </div>
-                <div class="testimonial-item">
-                    <div class="quote">“It feels like hiring an employee rather than opening another chat window.”</div>
-                    <div class="quote-author">— <a href="https://www.macstories.net">MacStories</a></div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"It feels like hiring an employee rather than opening another chat window."</p>
+                    <div class="testimonial-author">— MACSTORIES</div>
                 </div>
-                <div class="testimonial-item">
-                    <div class="quote">“One user cleared nearly 6,000 emails from their inbox on the first day.”</div>
-                    <div class="quote-author">— Turing College</div>
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">"One user cleared nearly 6,000 emails from their inbox on the first day."</p>
+                    <div class="testimonial-author">— TURING COLLEGE</div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="definition">
-            <h2>Why not just set it up yourself?</h2>
-            <p>
-                You can — OpenClaw is open-source. But most founders need custom integrations beyond the defaults, and even experienced engineers spend several hours getting everything wired up. Then there's the ongoing maintenance: updates, drift, broken workflows, security patches.
-            </p>
-            <p>
-                We handle all of it — deployed securely from day one, following the <a href="#">official hardening guide</a>, so you get leverage instead of another project to maintain. We show up and do it for you.
-            </p>
-        </div>
-
-        <div class="definition">
-            <h2>Implementation</h2>
-            <div class="pricing-grid">
-                <a href="mailto:adam@salmanovmedia.com?subject=NYC In-Person Setup" class="pricing-card">
-                    <span class="pricing-title">In-Person (NYC)</span>
-                    <span class="pricing-desc">Manhattan/Brooklyn — first agent + custom skill mapping + 14-day hypercare</span>
-                    <span class="price">$2,400</span>
-                </a>
-                <a href="mailto:adam@salmanovmedia.com?subject=Remote Setup" class="pricing-card">
-                    <span class="pricing-title">Remote</span>
-                    <span class="pricing-desc">Anywhere — first agent + custom skill mapping + 14-day hypercare</span>
-                    <span class="price">$1,200</span>
-                </a>
-            </div>
+    <!-- Value Prop -->
+    <section>
+        <div class="container">
+            <span class="label">YOUR AGENT GETS SMARTER OVER TIME</span>
+            <h2 style="margin-bottom: var(--space-3);">Unlike ChatGPT, your OpenClaw agent remembers your preferences, learns your tone, and gets better at handling your specific workflows.</h2>
             
-            <h3 style="margin-top: 40px; margin-bottom: 20px;">Managed Care</h3>
-            <div class="pricing-grid">
-                <a href="mailto:adam@salmanovmedia.com?subject=Care Standard" class="pricing-card">
-                    <span class="pricing-title">Care Standard</span>
-                    <span class="pricing-desc">Monitoring, support, updates, and workflow tuning.</span>
-                    <span class="price">$1,875 <span class="price-sub">/mo</span></span>
-                </a>
-                <a href="mailto:adam@salmanovmedia.com?subject=Care Plus" class="pricing-card">
-                    <span class="pricing-title">Care Plus</span>
-                    <span class="pricing-desc">Priority support, monthly strategic review, and custom skill updates.</span>
-                    <span class="price">$3,750 <span class="price-sub">/mo</span></span>
-                </a>
+            <div class="grid-2" style="margin-top: var(--space-8);">
+                <div class="card">
+                    <div class="card-icon">🧠</div>
+                    <h3 class="card-title">Learns How You Work</h3>
+                    <p class="card-desc">Your agent doesn't just follow instructions. It learns how you prioritize emails, how you like meetings scheduled, and the tone you use with different people. The more you use it, the less you have to explain.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3 class="card-title">Custom Skills for Your Business</h3>
+                    <p class="card-desc">We build custom workflows tailored to how you operate. Automated deal pipeline updates in your CRM? Weekly digest emails to your team? Video clip extraction from your content? We configure it during setup.</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <p style="margin-top: 32px; color: #666; font-size: 14px;">
-                Implementation includes your custom Intelligence Layer. Ongoing maintenance and skill updates require Managed Care.
+    <!-- What You're Getting -->
+    <section style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div class="container" style="max-width: 900px;">
+            <span class="label">WHAT YOU'RE GETTING</span>
+            <h2 style="margin-bottom: var(--space-3);">One Agent = One You</h2>
+            <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-3);">
+                We configure <strong style="color: var(--text-primary);">one OpenClaw instance</strong> connected to your primary identity: your Gmail, your calendar, your iMessage, your files. This keeps your data isolated and secure.
+            </p>
+            <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7;">
+                Built for <strong style="color: var(--text-primary);">solo founders, operators, and high-net-worth individuals</strong> who can't afford to waste time on admin but also can't afford to trust their data to someone else's cloud.
             </p>
         </div>
+    </section>
 
-        <div class="definition">
-            <h2>How it works</h2>
-            <div class="steps">
-                <div class="step-item">
-                    <div class="step-num">1</div>
-                    <div class="step-content">
-                        <h3>Kickoff</h3>
-                        <p>Goals, systems (Google/Microsoft), security posture.</p>
-                    </div>
+    <!-- How It Works -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="grid-2" style="align-items: start;">
+                <div>
+                    <h2 style="margin-bottom: var(--space-4);">Yes, OpenClaw is free. Your weekend isn't.</h2>
+                    <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-4);">
+                        You could spend Saturday wrestling with Node versions, setting up Homebrew, and Googling permission errors. Or you could let us handle it while you're in Brooklyn next Monday.
+                    </p>
+                    <ul class="security-list">
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong style="color: var(--text-primary);">Locked-down security:</strong>
+                                <span style="color: var(--text-secondary);"> We configure firewall rules, network isolation, and encrypted credential storage. Your Gmail password stays on your desk.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong style="color: var(--text-primary);">Workflow mapping:</strong>
+                                <span style="color: var(--text-secondary);"> We connect your actual stack—Gmail, Slack, Linear, Notion—and configure the agent to handle <em>your</em> specific admin work.</span>
+                            </div>
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <div>
+                                <strong style="color: var(--text-primary);">14 days of hypercare:</strong>
+                                <span style="color: var(--text-secondary);"> After setup, we monitor uptime and fix drift. If your agent stops responding or a skill breaks, we patch it before you notice.</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="step-item">
-                    <div class="step-num">2</div>
-                    <div class="step-content">
-                        <h3>Implementation</h3>
-                        <p>Install + hardening + connect integrations + build custom skills.</p>
+                
+                <div class="process-card">
+                    <h3 style="margin-bottom: var(--space-4);">What Happens During Setup</h3>
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Kickoff Call</h4>
+                            <p>You tell us which repetitive tasks drain your time. Email triage? Meeting prep? Calendar juggling? We map your goals and security requirements.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">3</div>
-                    <div class="step-content">
-                        <h3>Go-live</h3>
-                        <p>You start using it the same day.</p>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Installation & Hardening</h4>
+                            <p>We deploy on your Mac Mini (or one we bring). Lock down network access. Encrypt credential storage. Connect your tools. Build custom skills.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">4</div>
-                    <div class="step-content">
-                        <h3>Hypercare</h3>
-                        <p>14 days of fast fixes and tuning via your dedicated support channel.</p>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Go-Live & Training</h4>
+                            <p>You start using it the same day. We train you on basic commands and workflows until you're productive.</p>
+                        </div>
                     </div>
-                </div>
-                <div class="step-item">
-                    <div class="step-num">5</div>
-                    <div class="step-content">
-                        <h3>Managed Care</h3>
-                        <p>Monitoring, updates, drift checks, and ongoing improvements.</p>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>14-Day Hypercare</h4>
+                            <p>Fast fixes and tuning via your dedicated support channel. We stay close while you get comfortable.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="definition">
-            <h2>Security & your data</h2>
-            <p>OpenClaw runs locally — your data stays on your hardware. We follow the official hardening guide:</p>
-            <ul class="security-list">
-                <li>Inbound access locked — DM pairing, mention-gating in groups, explicit allowlists</li>
-                <li>Network exposure minimized — loopback-only binding, no public endpoints</li>
-                <li>Tool blast radius limited — elevated tools restricted, sandboxing enabled</li>
-                <li>File permissions set — credentials and config locked to your user</li>
-                <li>Security audit before handoff — you can re-run it anytime</li>
-            </ul>
+    <!-- Security -->
+    <section id="security" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div class="container" style="max-width: 900px;">
+            <h2 style="margin-bottom: var(--space-4);">Your Data Stays on Your Desk</h2>
+            <p style="font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-6);">
+                OpenClaw runs locally on your hardware. Your emails, calendar, files, and credentials never leave your machine. We follow the official hardening guide to lock everything down:
+            </p>
+            
+            <div class="card">
+                <ul class="security-list">
+                    <li>
+                        <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <div>
+                            <strong style="color: var(--text-primary);">Locked network access:</strong>
+                            <span style="color: var(--text-secondary);"> Loopback-only binding, no public endpoints, DM pairing for messaging</span>
+                        </div>
+                    </li>
+                    <li>
+                        <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <div>
+                            <strong style="color: var(--text-primary);">Restricted tool permissions:</strong>
+                            <span style="color: var(--text-secondary);"> Sandboxing enabled, elevated tools gated, explicit allowlists for sensitive actions</span>
+                        </div>
+                    </li>
+                    <li>
+                        <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <div>
+                            <strong style="color: var(--text-primary);">Encrypted credential storage:</strong>
+                            <span style="color: var(--text-secondary);"> All API keys and passwords locked to your user account with proper file permissions</span>
+                        </div>
+                    </li>
+                    <li>
+                        <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <div>
+                            <strong style="color: var(--text-primary);">Security audit before handoff:</strong>
+                            <span style="color: var(--text-secondary);"> We run the full security checklist. You can re-run it anytime.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </section>
 
-        <div class="definition">
-            <h2>Contact</h2>
-            <p>Questions? <a href="mailto:adam@salmanovmedia.com">Email Adam</a> or DM <a href="https://x.com/adamsalmanovbiz">@adamsalmanovbiz</a> on X or <a href="https://instagram.com/adamsalmanovbiz">Instagram</a>.</p>
-            <a href="mailto:adam@salmanovmedia.com" class="cta-button">Book a Call</a>
+    <!-- Pricing -->
+    <section id="pricing">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: var(--space-3);">Two Ways to Get Started</h2>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 16px; margin-bottom: var(--space-10);">One-time setup. Optional ongoing maintenance.</p>
+            
+            <div class="grid-2" style="max-width: 1000px; margin: 0 auto var(--space-12);">
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">NYC</div>
+                    <h3 class="pricing-title">In-Person Setup (NYC)</h3>
+                    <p class="pricing-desc">Manhattan or Brooklyn. Four hours. You walk out productive.</p>
+                    <div class="price">$2,400 <span class="price-sub">ONE-TIME</span></div>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            We meet at your office or a coffee shop
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Full security hardening & network config
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Connect Gmail, Calendar, Slack, Linear, Notion
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Custom skill mapping for your workflows
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            14 days of priority support
+                        </li>
+                    </ul>
+                    <a href="mailto:adam@salmanovmedia.com?subject=NYC In-Person Setup" class="btn-primary" style="display: block; text-align: center; width: 100%;">SCHEDULE YOUR SETUP</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="pricing-title">Remote Setup</h3>
+                    <p class="pricing-desc">Anywhere in the world. Same process, over Zoom.</p>
+                    <div class="price">$1,200 <span class="price-sub">ONE-TIME</span></div>
+                    <ul class="pricing-features">
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Screen-sharing walkthrough over Zoom
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Full security hardening & network config
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Connect Gmail, Calendar, Slack, Linear, Notion
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            Custom skill mapping for your workflows
+                        </li>
+                        <li>
+                            <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            14 days of priority support
+                        </li>
+                    </ul>
+                    <a href="mailto:adam@salmanovmedia.com?subject=Remote Setup" class="btn-secondary" style="display: block; text-align: center; width: 100%;">SCHEDULE YOUR SETUP</a>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="text-align: center; margin-bottom: var(--space-6);">Ongoing Maintenance (Optional)</h3>
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: var(--space-6);">Keep your agent running smoothly with proactive monitoring and updates.</p>
+                
+                <div class="grid-2" style="max-width: 1000px; margin: 0 auto;">
+                    <div class="pricing-card">
+                        <h3 class="pricing-title">Care Standard</h3>
+                        <p class="pricing-desc">Monitoring, updates, and workflow tuning.</p>
+                        <div class="price">$1,875 <span class="price-sub">/MONTH</span></div>
+                        <ul class="pricing-features">
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Proactive uptime monitoring
+                            </li>
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                System updates and security patches
+                            </li>
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Fix drift and broken workflows
+                            </li>
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Standard support (48-hour response)
+                            </li>
+                        </ul>
+                        <a href="mailto:adam@salmanovmedia.com?subject=Care Standard" class="btn-secondary" style="display: block; text-align: center; width: 100%;">GET CARE STANDARD</a>
+                    </div>
+
+                    <div class="pricing-card featured">
+                        <div class="pricing-badge">POPULAR</div>
+                        <h3 class="pricing-title">Care Plus</h3>
+                        <p class="pricing-desc">Priority support, strategic reviews, and custom skills.</p>
+                        <div class="price">$3,750 <span class="price-sub">/MONTH</span></div>
+                        <ul class="pricing-features">
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Everything in Care Standard
+                            </li>
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Priority support (same-day response)
+                            </li>
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Monthly strategic workflow review
+                            </li>
+                            <li>
+                                <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                Custom skill development and updates
+                            </li>
+                        </ul>
+                        <a href="mailto:adam@salmanovmedia.com?subject=Care Plus" class="btn-primary" style="display: block; text-align: center; width: 100%;">GET CARE PLUS</a>
+                    </div>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: var(--space-8); font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+                HARDWARE NOT INCLUDED. WE CAN PROCURE A MAC MINI AT COST OR WORK WITH YOURS (M1 OR NEWER RECOMMENDED).
+            </p>
         </div>
-        
-        <footer>
-            <div>
-                <span class="salmanov-brand">&lt;SALMANOV /&gt;</span>
-            </div>
-            <div>
-                © 2026 Adam Salmanov
-            </div>
-            <div>
-                <a href="https://salmanovmedia.com" style="color: #666; text-decoration: none;">Salmanov Media</a>
-            </div>
-        </footer>
+    </section>
 
-    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 SALMANOV MEDIA. ALL RIGHTS RESERVED.</p>
+            <div class="footer-links">
+                <a href="https://x.com/adamsalmanovbiz">TWITTER</a>
+                <a href="https://salmanovmedia.com">AGENCY</a>
+                <a href="mailto:adam@salmanovmedia.com">EMAIL</a>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
